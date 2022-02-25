@@ -46,15 +46,21 @@ public class Corrente extends Conta {
 
 
 
-	public void pagamento() {
+	public static void pagamento() {
 		
 	}
 	
-	public void deposito() {
-		
+	public static void deposito(int indice) {
+		System.out.print("Digite o valor do depósito: ");
+		double valorDeposito = sc.nextDouble();
+		double saldoAntigo = listaCorrente.get(indice).getSaldo();
+		listaCorrente.get(indice).setSaldo(listaCorrente.get(indice).getSaldo() + valorDeposito);
+
+		System.out.println("Saldo antigo: " + saldoAntigo);
+		System.out.println("Saldo atual: " + listaCorrente.get(indice).getSaldo());
 	}
 	
-	public void transferencia() {
+	public static void transferencia() {
 		
 	}
 	

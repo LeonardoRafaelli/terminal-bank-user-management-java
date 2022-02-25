@@ -29,7 +29,17 @@ public class Poupança extends Conta {
 	}
 
 
+	public void deposito() {
 
+	}
+
+	public void transferencia() {
+
+	}
+
+
+
+//	Getters and Setters
 	public double getRendimento() {
 		return rendimento;
 	}
@@ -37,14 +47,7 @@ public class Poupança extends Conta {
 	public void setRendimento(double rendimento) {
 		this.rendimento = rendimento;
 	}
-	
-	
-	public void deposito() {
-		
-	}
-	
-	public void transferencia() {
-		
-	}
-	
+
+
+
 }

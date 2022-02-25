@@ -1,6 +1,7 @@
-
+import java.util.Scanner;
 
 public class Conta {
+	static Scanner sc = new Scanner(System.in);
 //	Scanner sc = new Scanner(System.in);
 	
 //	ArrayList<Conta> contas = new ArrayList<Conta>();
@@ -9,10 +10,6 @@ public class Conta {
 	private String titular, senha;
 	private boolean status;
 	private int numero;
-	
-
-
-	
 
 
 	public Conta(double saldo, String titular, String senha, boolean status, int numero) {
@@ -35,7 +32,7 @@ public class Conta {
 
 	@Override
 	public String toString() {
-		return "Titular: " + titular + "\nNúmero: " + numero + "\nSenha: " + senha + "\nStatus: " + status + "\nSaldo: R$ " + saldo;
+		return "\nTitular: " + titular + "\nNúmero: " + numero + "\nSenha: " + senha + "\nStatus: " + status + "\nSaldo: R$ " + saldo;
 	}
 
 
@@ -48,13 +45,57 @@ public class Conta {
 //	}
 	
 	
-	public void saque() {
-		
+	public static void saque(int tipoConta, int i) {
+		System.out.print("Qual o valor que desejas sacar?" +
+				"\nDigite aqui: ");
+		double valorSaque = sc.nextDouble();
+		switch(tipoConta){
+			case 1:
+				if(valorSaque > Corrente.listaCorrente.get(i).getLimite()){
+					System.out.println("Seu limite de saque é de: " + Corrente.listaCorrente.get(i).getLimite());
+				} else if(valorSaque > Corrente.listaCorrente.get(i).getSaldo()) {
+					System.out.println("Você não possui saldo suficiente!" +
+							"\nSaldo atual: " + Corrente.listaCorrente.get(i).getSaldo());
+				} else {
+					Corrente.listaCorrente.get(i).setSaldo(Corrente.listaCorrente.get(i).getSaldo() - valorSaque);
+				}
+				break;
+			case 2:
+				if(valorSaque > Credito.listaCredito.get(i).getLimite()){
+					System.out.println("Seu limite de saque é de: " + Credito.listaCredito.get(i).getLimite());
+				} else if(valorSaque > Credito.listaCredito.get(i).getSaldo()) {
+					System.out.println("Você não possui saldo suficiente!" +
+							"\nSaldo atual: " + Credito.listaCredito.get(i).getSaldo());
+				} else {
+					Credito.listaCredito.get(i).setSaldo(Credito.listaCredito.get(i).getSaldo() - valorSaque);
+				}
+				break;
+			case 3:
+				if(valorSaque > Poupança.listaPoupanca.get(i).getSaldo()){
+					System.out.print("Você não possui saldo suficiente para o saque!" +
+							"\nSaldo atual: " + Poupança.listaPoupanca.get(i).getSaldo());
+				} else {
+					Poupança.listaPoupanca.get(i).setSaldo(Poupança.listaPoupanca.get(i).getSaldo() - valorSaque);
+					System.out.println("Saldo Atual: " + Poupança.listaPoupanca.get(i).getSaldo());
+				}
+				break;
+		}
 	}
 
 //	Buscar o saldo;
-	public void saldo() {
-		
+	public static void saldo(int tipoConta, int i) {
+		System.out.print("Saldo Disponível: ");
+		switch(tipoConta){
+			case 1:
+				System.out.println(Corrente.listaCorrente.get(i).getSaldo());
+				break;
+			case 2:
+				System.out.println(Credito.listaCredito.get(i).getSaldo());
+				break;
+			case 3:
+				System.out.println(Poupança.listaPoupanca.get(i).getSaldo());
+				break;
+		}
 	}
 	
 	

@@ -1,10 +1,17 @@
 import java.util.Scanner;
 
 public class Main {
-	
+
 	static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		Corrente contaCorr1 = new Corrente();
+		contaCorr1.setNumero(123);
+		contaCorr1.setLimite(2000);
+		contaCorr1.setSenha("123");
+		contaCorr1.setTitular("Leozin");
+		contaCorr1.setSaldo(1000);
+		Corrente.listaCorrente.add(contaCorr1);
 		menuPrincipal();
 	}
 
@@ -41,7 +48,7 @@ public class Main {
 	// CÓDIGOS DE USUÁRIO
 	private static void menuUsuário() {
 		System.out.print("\n------ MENU USUÁRIO ------"
-				+ "\nSelecione o tipo de conta que quer usar"
+				+ "\nSelecione o tipo da conta:"
 				+ "\n1 - Corrente;" 
 				+ "\n2 - Crédito;"
 				+ "\n3 - Poupança;"
@@ -50,13 +57,13 @@ public class Main {
 		int opcao = sc.nextInt();
 		switch (opcao) {
 			case 1:
-				menuContaCorrente();
+				entradaContaCorrente(opcao);
 				break;
 			case 2:
-				menuContaCrédito();
+//				menuContaCrédito(opcao);
 				break;
 			case 3:
-				menuContaPoupança();
+//				menuContaPoupança(opcao);
 				break;
 			case 4:
 				menuPrincipal();
@@ -69,27 +76,71 @@ public class Main {
 	}
 	
 	
-	private static void menuContaCorrente() {
-		int i;
-		System.out.print("Digite o número da conta: ");
+	private static void entradaContaCorrente(int tipoConta) {
+		int i, verificar = 0, indice;
+
+		System.out.print("\n------ CONTA CORRENTE ------" +
+				"\nDigite o número da conta (0 - Voltar): ");
 		int conta = sc.nextInt();
-			for(i = 0; i < Corrente.listaCorrente.size(); i++){
-				if(Corrente.listaCorrente.get(i).getNumero() == conta) {
-					menuDecisaoCorrente();
+		if(conta == 0){
+			menuUsuário();
+		}
+		System.out.print("Digite a senha: ");
+		String senha = sc.next();
+			for(i = 0; i < Corrente.listaCorrente.size(); i++) {
+				if (Corrente.listaCorrente.get(i).getNumero() == conta) {
+					if (Corrente.listaCorrente.get(i).getSenha().equals(senha)) {
+						verificar = 1;
+						indice = i;
+						menuOpcoesCorrente(tipoConta, indice);
+					}
 				}
 			}
-			
-		System.out.println("Conta não existe! Tente dnv");
-		menuContaCorrente();
-//		System.out.println("Conta cancelada com sucesso paeee!");
-//		menuBloqueio();
-	
+		if(verificar != 1){
+		System.out.println("Número ou senha incorretos!");
+		entradaContaCorrente(tipoConta);
+		}
 	}
 	
-	private static void menuDecisaoCorrente() {
-		
+	private static void menuOpcoesCorrente(int tipoConta, int indice) {
+		System.out.print("\n------ MENU MINHA CONTA CORRENTE ------" +
+				"\n1 - Ver Saldo;" +
+				"\n2 - Saque;" +
+				"\n3 - Depósito;" +
+				"\n4 - Transferência;" +
+				"\n5 - Pagamento;" +
+				"\n6 - Voltar." +
+				"\nDigite aqui: ");
+		int opcao = sc.nextInt();
+		switch(opcao){
+			case 1:
+				Conta.saldo(tipoConta, indice);
+				menuOpcoesCorrente(tipoConta, indice);
+				break;
+			case 2:
+				Conta.saque(tipoConta, indice);
+				menuOpcoesCorrente(tipoConta, indice);
+				break;
+			case 3:
+				Corrente.deposito(indice);
+				menuOpcoesCorrente(tipoConta, indice);
+				break;
+			case 4:
+//				transferencia(tipoConta, indice);
+				break;
+			case 5:
+				break;
+			case 6:
+				entradaContaCorrente(tipoConta);
+				break;
+			default:
+				System.out.println("Por favor, digite um número de 1 à 4");
+				menuOpcoesCorrente(tipoConta, indice);
+				break;
+		}
 	};
-	
+
+
 	private static void menuContaCrédito() {
 		
 	}
@@ -98,7 +149,43 @@ public class Main {
 		
 	}
 
-	
+//	private static void verSaldo(int tipoConta, int i){
+//		switch(tipoConta){
+//			case 1:
+//				System.out.println(Corrente.listaCorrente.get(i).getSaldo());
+//				break;
+//			case 2:
+//				System.out.println(Credito.listaCredito.get(i).getSaldo());
+//				break;
+//			case 3:
+//				System.out.println(Poupança.listaPoupanca.get(i).getSaldo());
+//				break;
+//		}
+//		menuDecisaoCorrente(tipoConta, i);
+//	}
+
+//	private static void saque(int tipoConta, int i) {
+//		System.out.print("Qual o valor que desejas sacar?" +
+//				"\nDigite aqui: ");
+//		double valorSaque = sc.nextDouble();
+//		switch(tipoConta){
+//			case 1:
+//				if(valorSaque > Corrente.listaCorrente.get(i).getLimite()){
+//					System.out.println("Seu limite de saque é de: " + Corrente.listaCorrente.get(i).getLimite());
+//				}
+//				Corrente.listaCorrente.get(i).setSaldo(Corrente.listaCorrente.get(i).getSaldo() - valorSaque);
+//				break;
+//			case 2:
+//				Credito.listaCredito.get(i).setSaldo(Credito.listaCredito.get(i).getSaldo() - valorSaque);
+//				break;
+//			case 3:
+//				Poupança.listaPoupanca.get(i).setSaldo(Poupança.listaPoupanca.get(i).getSaldo() - valorSaque);
+//				break;
+//		}
+//
+//
+//		menuDecisaoCorrente(tipoConta, i);
+//	};
 	
 	
 	
