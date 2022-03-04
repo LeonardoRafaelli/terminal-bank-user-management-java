@@ -35,14 +35,36 @@ public class Conta {
 		return "\nTitular: " + titular + "\nNúmero: " + numero + "\nSenha: " + senha + "\nStatus: " + status + "\nSaldo: R$ " + saldo;
 	}
 
-
-//	public void cadastro() {
-//		Conta contaTemp = new Conta();
-//		System.out.println("Informe os dados da conta: ");
-//		System.out.print("Titular: ");
-//		contaTemp.setTitular(sc.next());
-//		
-//	}
+	public static int acharConta(int tipoConta, int numeroConta){
+		switch (tipoConta){
+			case 1:
+				for(int i = 0; i < Corrente.listaCorrente.size(); i++){
+					if(Corrente.listaCorrente.get(i).getNumero() == numeroConta){
+						return i;
+					}
+				}
+				break;
+			case 2:
+				for(int i = 0; i < Credito.listaCredito.size(); i++){
+					if(Credito.listaCredito.get(i).getNumero() == numeroConta){
+						return i;
+					}
+				}
+				break;
+			case 3:
+				for(int i = 0; i < Poupanca.listaPoupanca.size(); i++){
+					if(Poupanca.listaPoupanca.get(i).getNumero() == numeroConta){
+						return i;
+					}
+				}
+				break;
+			default:
+				System.out.println("\nDigite um número entre 1 e 3.");
+				acharConta(tipoConta, numeroConta);
+				break;
+		}
+		return -1;
+	};
 	
 	
 	public static void saque(int tipoConta, int i) {
@@ -71,12 +93,12 @@ public class Conta {
 				}
 				break;
 			case 3:
-				if(valorSaque > Poupança.listaPoupanca.get(i).getSaldo()){
+				if(valorSaque > Poupanca.listaPoupanca.get(i).getSaldo()){
 					System.out.print("Você não possui saldo suficiente para o saque!" +
-							"\nSaldo atual: " + Poupança.listaPoupanca.get(i).getSaldo());
+							"\nSaldo atual: " + Poupanca.listaPoupanca.get(i).getSaldo());
 				} else {
-					Poupança.listaPoupanca.get(i).setSaldo(Poupança.listaPoupanca.get(i).getSaldo() - valorSaque);
-					System.out.println("Saldo Atual: " + Poupança.listaPoupanca.get(i).getSaldo());
+					Poupanca.listaPoupanca.get(i).setSaldo(Poupanca.listaPoupanca.get(i).getSaldo() - valorSaque);
+					System.out.println("Saldo Atual: " + Poupanca.listaPoupanca.get(i).getSaldo());
 				}
 				break;
 		}
@@ -93,7 +115,7 @@ public class Conta {
 				System.out.println(Credito.listaCredito.get(i).getSaldo());
 				break;
 			case 3:
-				System.out.println(Poupança.listaPoupanca.get(i).getSaldo());
+				System.out.println(Poupanca.listaPoupanca.get(i).getSaldo());
 				break;
 		}
 	}

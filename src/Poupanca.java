@@ -1,63 +1,43 @@
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Corrente extends Conta {
+public class Poupanca extends Conta {
 	
-	static ArrayList<Corrente> listaCorrente = new ArrayList<Corrente>();
+	private double rendimento;
+
+	static ArrayList<Poupanca> listaPoupanca = new ArrayList<Poupanca>();
 	
-	private double limite;
-	
-	public double getLimite() {
-		return limite;
-	}
-
-
-
-	public void setLimite(double limite) {
-		this.limite = limite;
-	}
-	
-
 
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nLimite: " + limite;
+		return super.toString() + "\nRendimento: " + rendimento;
 	}
+	
+	
 
-
-
-	public Corrente(double saldo, String titular, String senha, boolean status,
-			int numero, double limite) {
+	public Poupanca(double saldo, String titular, String senha, boolean status, int numero, double rendimento) {
 		super(saldo, titular, senha, status, numero);
-		this.limite = limite;
+		this.rendimento = rendimento;
 	}
 
 
 
-	public Corrente() {
+	public Poupanca() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-
-
-	public static void pagamento() {
-		
-	}
-
 	public static void deposito(int indice) {
 		System.out.print("Digite o valor do depósito: ");
 		double valorDeposito = sc.nextDouble();
-		double saldoAntigo = listaCorrente.get(indice).getSaldo();
-		listaCorrente.get(indice).setSaldo(listaCorrente.get(indice).getSaldo() + valorDeposito);
+		double saldoAntigo = listaPoupanca.get(indice).getSaldo();
+		listaPoupanca.get(indice).setSaldo(listaPoupanca.get(indice).getSaldo() + valorDeposito);
 
 		System.out.println("Saldo antigo: " + saldoAntigo);
-		System.out.println("Saldo atual: " + listaCorrente.get(indice).getSaldo());
+		System.out.println("Saldo atual: " + listaPoupanca.get(indice).getSaldo());
 	}
-	
+
 	public static void transferencia(int tipoConta, int indice) {
 		System.out.print("""
 								
@@ -80,18 +60,18 @@ public class Corrente extends Conta {
 		switch(contaTrans){
 			case 1:
 				int iCorrente = Conta.acharConta(contaTrans, numContaFav);
-					if(listaCorrente.get(iCorrente).getSaldo() > valorTrans){
-						listaCorrente.get(iCorrente).setSaldo(listaCorrente.get(iCorrente).getSaldo() + valorTrans);
+				if(Corrente.listaCorrente.get(iCorrente).getSaldo() > valorTrans){
+					Corrente.listaCorrente.get(iCorrente).setSaldo(Corrente.listaCorrente.get(iCorrente).getSaldo() + valorTrans);
 					foundAcc = 1;
-					} else {
-						System.out.print("Você não possui saldo suficiente para realiar esta transferência!");
-					}
+				} else {
+					System.out.print("Você não possui saldo suficiente para realiar esta transferência!");
+				}
 
 				if(foundAcc ==  0){
 					System.out.println("\nConta corrente não encontrada.");
 					transferencia(tipoConta, indice);
 				} else {
-					listaCorrente.get(indice).setSaldo(listaCorrente.get(indice).getSaldo() - valorTrans);
+					listaPoupanca.get(indice).setSaldo(listaPoupanca.get(indice).getSaldo() - valorTrans);
 				}
 				break;
 			case 2:
@@ -107,15 +87,26 @@ public class Corrente extends Conta {
 					System.out.println("\nConta corrente não encontrada.");
 					transferencia(tipoConta, indice);
 				} else {
-					listaCorrente.get(indice).setSaldo(listaCorrente.get(indice).getSaldo() - valorTrans);
+					listaPoupanca.get(indice).setSaldo(listaPoupanca.get(indice).getSaldo() - valorTrans);
 				}
 				break;
 			default:
-			break;
-			};
-		}
-		}
+				break;
+		};
+	}
+	}
 
-	
-	
+
+
+//	Getters and Setters
+	public double getRendimento() {
+		return rendimento;
+	}
+
+	public void setRendimento(double rendimento) {
+		this.rendimento = rendimento;
+	}
+
+
+
 }
